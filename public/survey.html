@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Friend Finder</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm">
+                <h1>Survey Questions</h1>
+                <br>
+                <h1>About You</h1>
+                <p>Name (Required)</p>
+                <input id="Name"></input>
+                <p>Link to Photo Image (Required)</p>
+                <input id="Photo"></input>
+
+                <br>
+                <h2>Question 1</h2>
+                <p>Your mind is always buzzing with unexplored ideas and plans</p>
+                <br>
+                <select id="q1">
+                    <option selected disabled>Choose one</option>
+                    <option name="ans1" value="1">1</option>
+                    <option name="ans2" value="2">2</option>
+                    <option name="ans3" value="3">3</option>
+                    <option name="ans4" value="3">4</option>
+                    <option name="ans5" value="3">5</option>
+                </select>
+
+                <br>
+                <h2>Question 2</h2>
+                <p>Generally speaking, you rely more on your experience than your imagination.</p>
+                <br>
+                <select id="q2">
+                    <option selected disabled>Choose one</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+
+                <br>
+                <h2>Question 3</h2>
+                <p>You find it easy to stay relaxed and focused even when there is some pressure.</p>
+                <br>
+                <select id="q3">
+                    <option selected disabled>Choose one</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+
+                <br>
+                <br>
+                <br>
+                <button type="submit" class="btn btn-primary btn-lg btn-block" id="submit">Submit</button>
+
+            </div>
+        </div>
+    </div>
+    <br>
+    <footer class="footer">
+        <div class="container">
+            <p>
+                <a href="/api/friends">API Friends List</a> |
+                <a href="/api/waitlist">GitHub Repo</a>
+            </p>
+        </div>
+        <script>
+            $("#submit").on("click", function () {
+                alert("Handler");
+
+                var userData = {
+                    name: $("#Name").val(),
+                    photo: $("#Photo").val(),
+                    scores: [($("#q1").val()), $("#q2").val(), $("#q3").val(),]
+                };
+                console.log(userData);
+
+            });
+
+
+            $.post("/survey", userData,
+                function (data) {
+
+                    // If a table is available... tell user they are booked.
+                    if (data) {
+                        alert("Yay! You are officially booked!");
+                    }
+
+                    // If a table is available... tell user they on the waiting list.
+                    else {
+                        alert("Sorry you are on the wait list");
+                    }
+                });
+
+
+        </script>
+</body>
+
+
+</html>
