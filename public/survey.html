@@ -64,7 +64,7 @@
                 <br>
                 <br>
                 <br>
-                <button type="submit" class="btn btn-primary btn-lg btn-block" id="submit">Submit</button>
+                <button type="submit" class="btn btn-primary btn-lg btn-block" id="submit" data-toggle="modal" data-target="#myModal">Submit</button>
 
             </div>
         </div>
@@ -77,9 +77,34 @@
                 <a href="/api/waitlist">GitHub Repo</a>
             </p>
         </div>
+
+        <!-- Trigger the modal with a button
+        <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button> -->
+
+        <!-- Modal -->
+        <div id="myModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Congrats!</h4>
+                    </div>
+                    <div class="modal-body">
+                        <h3 id='modalName'>You matched with </h3>
+                        <img id="modalPhoto">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
         <script>
             $("#submit").on("click", function () {
-                alert("Handler");
 
                 var userData = {
                     name: $("#Name").val(),
@@ -88,26 +113,21 @@
                 };
                 console.log(userData);
 
+
+
+                $.post("/survey", userData,
+                    function (data) {
+                        console.log(data);
+                        console.log(data.name);
+                        $("#modalName").append(data.name);
+                        $("#modalPhoto").attr('src', data.photo);
+                        console.log(data.photo);
+                    });
             });
 
 
-            $.post("/survey", userData,
-                function (data) {
-
-                    // If a table is available... tell user they are booked.
-                    if (data) {
-                        alert("Yay! You are officially booked!");
-                    }
-
-                    // If a table is available... tell user they on the waiting list.
-                    else {
-                        alert("Sorry you are on the wait list");
-                    }
-                });
-
-
         </script>
-</body>
 
+</body>
 
 </html>

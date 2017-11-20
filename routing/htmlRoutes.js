@@ -21,6 +21,6 @@ app.get("/", function (req, res) {
   //add
   app.get("/survey", function (req, res) {
     res.sendFile(path.join(__dirname, "../public/survey.html"));
-    console.log(req.body.selectpicker);
+
   });
 }
